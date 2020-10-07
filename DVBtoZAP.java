@@ -10,7 +10,7 @@ import java.io.IOException;
  * Script for converting DVBSRC files created with w_scan to ATSC format usable
  * with azap
  * 
- *  usage: convertDVBSRCtoAZAP <inputfile> <outputfile>
+ * usage: convertDVBSRCtoAZAP <inputfile> <outputfile>
  * 
  * @author Eric
  */
@@ -68,8 +68,14 @@ public class DVBtoZAP {
 				while (currentLine.charAt(i) != ':')
 					i++;
 
-				// ignore non atsc
-				if (!currentLine.substring(0, i).contains("="))
+				// ignore =X values, we only want numbers before =
+				int e = 0;
+				if (!currentLine.substring(0, i).contains("=")) {
+					while (currentLine.charAt(i) != '=') {
+						e++;
+					}
+					videoPID = currentLine.substring(0, e);
+				} else
 					videoPID = currentLine.substring(0, i);
 
 				// move to end
