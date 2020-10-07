@@ -57,7 +57,7 @@ public class DVBtoZAP {
 
 				// get name move to frequency
 				name = currentLine.substring(0, i);
-				name.replaceAll("\\s+","");
+				name = name.replaceAll("\\s+","");
 				i += 8;
 				currentLine = currentLine.substring(i);
 				i = 0;
