@@ -16,11 +16,18 @@ import java.io.IOException;
  */
 public class DVBtoZAP {
 
-	// usage: convertDVBSRCtoAZAP <inputfile> <outputfile>
+	// usage: convertDVBSRCtoAZAP <inputfile>
+	// defaults dvb.conf as input file
+	// output file is always channel.conf
 	public static void main(String[] args) {
 
-		File input = new File(args[0]);
-		File output = new File(args[1]);
+		File input;
+		if(args.length > 0)
+			input = new File(args[0]);
+		else
+			input = new File("dvb.conf");
+		
+		File output = new File("channels.conf");
 
 		String name;
 		String frequency;
@@ -69,9 +76,9 @@ public class DVBtoZAP {
 					i++;
 
 				// ignore =X values, we only want numbers before =
-				int e = 0;
-				if (!currentLine.substring(0, i).contains("=")) {
-					while (currentLine.charAt(i) != '=') {
+				if (currentLine.substring(0, i).contains("=")) {
+					int e = 0;
+					while (currentLine.charAt(e) != '=') {
 						e++;
 					}
 					videoPID = currentLine.substring(0, e);
